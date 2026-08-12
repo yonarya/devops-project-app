@@ -1,0 +1,65 @@
+name: ticketing-platform
+
+services:
+  redis:
+    container_name: "redis"
+    image: "docker.io/library/redis:7-alpine"
+    networks:
+      - queue-net
+
+  postgres:
+    container_name: "postgres"
+    image: "docker.io/library/postgres:16-alpine"
+    env_file:
+      - .env
+    volumes:
+      - ticketing-postgres-data:/var/lib/postgresql/data
+      - ./infra/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    networks:
+      - db-net
+
+  api:
+    container_name: "ticketing-api"
+    image: "localhost/ticketing-api:1.0"
+    env_file:
+      - .env
+    ports:
+      - "8080:8080"
+    depends_on:
+      - redis
+      - postgres
+    networks:
+      - frontend-net
+      - queue-net
+      - db-net
+
+  worker:
+    container_name: "ticketing-worker"
+    image: "localhost/ticketing-worker:1.0"
+    env_file:
+      - .env
+    depends_on:
+      - redis
+      - postgres
+    networks:
+      - queue-net
+      - db-net
+
+  frontend:
+    container_name: "ticketing-frontend"
+    image: "localhost/ticketing-frontend:1.0"
+    env_file:
+      - .env
+    ports:
+      - "3000:3000"
+    networks:
+      - frontend-net
+
+networks:
+  frontend-net: {}
+  queue-net: {}
+  db-net: {}
+
+volumes:
+  ticketing-postgres-data:
+    external: true
