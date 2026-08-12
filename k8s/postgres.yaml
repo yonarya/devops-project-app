@@ -52,10 +52,16 @@ spec:
           volumeMounts:
             - name: postgres-data
               mountPath: /var/lib/pgsql/data
+            - name: postgres-init
+              mountPath: /opt/app-root/src/postgresql-start
+              readOnly: true
       volumes:
         - name: postgres-data
           persistentVolumeClaim:
             claimName: postgres-data
+        - name: postgres-init
+          configMap:
+            name: postgres-init
 
 ---
 apiVersion: v1
