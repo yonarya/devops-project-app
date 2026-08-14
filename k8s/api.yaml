@@ -17,6 +17,7 @@ spec:
       containers:
         - name: ticketing-api
           image: registry.ocp4.example.com:8443/developer/ticketing-api:1.0
+
           ports:
             - containerPort: 8080
 
@@ -42,6 +43,28 @@ spec:
                 secretKeyRef:
                   name: postgres-secret
                   key: POSTGRES_PASSWORD
+
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 10
+
+          readinessProbe:
+            httpGet:
+              path: /readyz
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 10
+
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "500m"
+              memory: "256Mi"
 
 ---
 apiVersion: v1
