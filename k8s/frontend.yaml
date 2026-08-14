@@ -19,6 +19,12 @@ spec:
           image: registry.ocp4.example.com:8443/developer/ticketing-frontend:1.0
           ports:
             - containerPort: 3000
+          env:
+            - name: API_BASE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: ticketing-config
+                  key: API_BASE_URL
 
 ---
 apiVersion: v1
