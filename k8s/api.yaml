@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ticketing-api
+  labels:
+    app: ticketing-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ticketing-api
+  template:
+    metadata:
+      labels:
+        app: ticketing-api
+    spec:
+      containers:
+        - name: ticketing-api
+          image: registry.ocp4.example.com:8443/developer/ticketing-api:1.0
+          ports:
+            - containerPort: 8080
+
+          envFrom:
+            - configMapRef:
+                name: ticketing-config
+
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: POSTGRES_USER
+
+            - name: POSTGRES_DB
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: POSTGRES_DB
+
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: POSTGRES_PASSWORD
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ticketing-api
+spec:
+  selector:
+    app: ticketing-api
+  ports:
+    - port: 8080
+      targetPort: 8080
