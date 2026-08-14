@@ -17,14 +17,38 @@ spec:
       containers:
         - name: ticketing-frontend
           image: registry.ocp4.example.com:8443/developer/ticketing-frontend:1.0
+
           ports:
             - containerPort: 3000
+
           env:
             - name: API_BASE_URL
               valueFrom:
                 configMapKeyRef:
                   name: ticketing-config
                   key: API_BASE_URL
+
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 3000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 3000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+
+          resources:
+            requests:
+              cpu: "50m"
+              memory: "64Mi"
+            limits:
+              cpu: "250m"
+              memory: "128Mi"
 
 ---
 apiVersion: v1
