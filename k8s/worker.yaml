@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ticketing-worker
+  labels:
+    app: ticketing-worker
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ticketing-worker
+  template:
+    metadata:
+      labels:
+        app: ticketing-worker
+    spec:
+      containers:
+        - name: ticketing-worker
+          image: registry.ocp4.example.com:8443/developer/ticketing-worker:1.0
+
+          envFrom:
+            - configMapRef:
+                name: ticketing-config
+
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: POSTGRES_USER
+
+            - name: POSTGRES_DB
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: POSTGRES_DB
+
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: POSTGRES_PASSWORD
