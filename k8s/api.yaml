@@ -54,3 +54,16 @@ spec:
   ports:
     - port: 8080
       targetPort: 8080
+
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: ticketing-api
+spec:
+  host: ticketing-api-ticketing-platform.apps.ocp4.example.com
+  to:
+    kind: Service
+    name: ticketing-api
+  port:
+    targetPort: 8080
