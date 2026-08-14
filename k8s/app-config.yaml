@@ -10,3 +10,4 @@ data:
   API_PORT: "8080"
   QUEUE_NAME: "ticket_orders"
   NODE_ENV: "production"
+  API_BASE_URL: "http://ticketing-api-ticketing-platform.apps.ocp4.example.com"
