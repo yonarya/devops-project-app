@@ -24,3 +24,27 @@ jobs:
 
       - name: Build worker image
         run: docker build -f worker/Containerfile -t ticketing-worker:ci worker
+
+      - name: Scan API image
+        uses: aquasecurity/trivy-action@v0.36.0
+        with:
+          image-ref: ticketing-api:ci
+          format: table
+          severity: HIGH,CRITICAL
+          exit-code: 0
+
+      - name: Scan frontend image
+        uses: aquasecurity/trivy-action@v0.36.0
+        with:
+          image-ref: ticketing-frontend:ci
+          format: table
+          severity: HIGH,CRITICAL
+          exit-code: 0
+
+      - name: Scan worker image
+        uses: aquasecurity/trivy-action@v0.36.0
+        with:
+          image-ref: ticketing-worker:ci
+          format: table
+          severity: HIGH,CRITICAL
+          exit-code: 0
