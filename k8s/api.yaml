@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: ticketing-api
-          image: registry.ocp4.example.com:8443/developer/ticketing-api:1.1
+          image: registry.ocp4.example.com:8443/developer/ticketing-api:1.0
 
           ports:
             - containerPort: 8080
