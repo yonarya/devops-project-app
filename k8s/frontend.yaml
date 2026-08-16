@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: ticketing-frontend
-          image: registry.ocp4.example.com:8443/developer/ticketing-frontend:1.0
+          image: registry.ocp4.example.com:8443/developer/ticketing-frontend:1.2
 
           ports:
             - containerPort: 3000

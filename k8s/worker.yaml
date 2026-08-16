@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: ticketing-worker
-          image: registry.ocp4.example.com:8443/developer/ticketing-worker:1.0
+          image: registry.ocp4.example.com:8443/developer/ticketing-worker:1.2
 
           envFrom:
             - configMapRef:
