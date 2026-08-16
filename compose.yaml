@@ -30,9 +30,11 @@ services:
 
   api:
     container_name: "ticketing-api"
-    image: "localhost/ticketing-api:1.0"
+    image: "localhost/ticketing-api:dev"
     env_file:
       - .env
+    volumes:
+      - ./api/src:/app/src
     ports:
       - "8080:8080"
     depends_on:
@@ -47,9 +49,11 @@ services:
 
   worker:
     container_name: "ticketing-worker"
-    image: "localhost/ticketing-worker:1.0"
+    image: "localhost/ticketing-worker:dev"
     env_file:
       - .env
+    volumes:
+      - ./worker/src:/app/src
     depends_on:
       redis:
         condition: service_healthy
@@ -61,9 +65,11 @@ services:
 
   frontend:
     container_name: "ticketing-frontend"
-    image: "localhost/ticketing-frontend:1.0"
+    image: "localhost/ticketing-frontend:dev"
     env_file:
       - .env
+    volumes:
+      - ./frontend/src:/app/src
     ports:
       - "3000:3000"
     networks:
