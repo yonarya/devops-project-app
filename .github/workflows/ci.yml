@@ -31,7 +31,7 @@ jobs:
           image-ref: ticketing-api:ci
           format: table
           severity: HIGH,CRITICAL
-          exit-code: 0
+          exit-code: 1
 
       - name: Scan frontend image
         uses: aquasecurity/trivy-action@v0.36.0
@@ -39,7 +39,7 @@ jobs:
           image-ref: ticketing-frontend:ci
           format: table
           severity: HIGH,CRITICAL
-          exit-code: 0
+          exit-code: 1
 
       - name: Scan worker image
         uses: aquasecurity/trivy-action@v0.36.0
@@ -47,4 +47,4 @@ jobs:
           image-ref: ticketing-worker:ci
           format: table
           severity: HIGH,CRITICAL
-          exit-code: 0
+          exit-code: 1
