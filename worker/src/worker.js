@@ -9,7 +9,7 @@ const pgPool = new Pool({
     port: Number(process.env.POSTGRES_PORT || 5432),
     database: process.env.POSTGRES_DB || "ticketing",
     user: process.env.POSTGRES_USER || "ticketing_user",
-    password: process.env.POSTGRES_PASSWORD || "change_me_local"
+    password: process.env.POSTGRES_PASSWORD
 });
 
 const redisClient = createClient({
