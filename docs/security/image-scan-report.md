@@ -50,3 +50,19 @@ HIGH: 7
 
 CRITICAL: 1
 
+
+## Završni rezultat
+
+Nakon sigurnosnog hardeninga produkcijski container imageovi ponovno su izgraðeni i skenirani pomoæu Trivy alata.
+
+Završni rezultat skeniranja:
+
+| Image | HIGH | CRITICAL |
+|---|---:|---:|
+| ticketing-api | 0 | 0 |
+| ticketing-frontend | 0 | 0 |
+| ticketing-worker | 0 | 0 |
+
+Nakon uklanjanja nepotrebnih npm i npx komponenti iz runtime imageova više nisu pronaðene HIGH ni CRITICAL ranjivosti. GitHub Actions CI workflow nakon izmjena završava uspješno.
+
+Ovaj rezultat pokazuje da je sigurnosni problem pronaðen skeniranjem, analiziran i uklonjen prije završne verzije produkcijskih imageova.
